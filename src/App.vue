@@ -42,8 +42,8 @@
           </div>
 
           <div class="form-group">
-            <label for="message">Message*</label>
-            <textarea name="" id="message" v-model="message"></textarea>
+            <label>Message*</label>
+            <textarea id="message" v-model="message" placeholder="Message*"></textarea>
           </div>
 
           <div class="form-group form-captcha">
@@ -96,9 +96,6 @@ export default {
     }
   },
   methods: {
-    captchaOk() {
-      console.log('captcha ok.!')
-    },
     captchaBtn() {
       this.btndis = false
     },
@@ -120,7 +117,6 @@ export default {
         }
 
         const resp = await axios.post('https://services.trackingmax.com/contact-form-receive', data)
-
 
         if (resp.data.success) {
           this.snackbar = {

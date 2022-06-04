@@ -127,3 +127,14 @@
     background: #ccc;
     cursor: not-allowed;
 }
+
+@media (max-width: 767px) {
+    .widget-button{
+        right: 20px;
+        bottom: 60px;
+    }
+    .widget-form{
+        width: 320px;
+        right: 20px;
+    }
+}
