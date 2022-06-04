@@ -13,6 +13,7 @@
     "document-register-element": "^1.14.10",
     "vue": "^2.6.11",
     "vue-axios": "^3.4.1",
+    "vue-captcha": "^1.0.2",
     "vue-custom-element": "^3.3.0",
     "webpack": "^4.46.0"
   },

@@ -37,17 +37,23 @@
           </div>
 
           <div class="form-group">
-            <label for="email">Email</label>
-            <input id="email" type="email" placeholder="Email" v-model="email">
+            <label for="email">Email*</label>
+            <input id="email" type="email" placeholder="Email*" v-model="email">
           </div>
 
           <div class="form-group">
-            <label for="message">Message</label>
+            <label for="message">Message*</label>
             <textarea name="" id="message" v-model="message"></textarea>
           </div>
 
+          <div class="form-group form-captcha">
+            <myCaptcha :callSuccess="captchaBtn"></myCaptcha>
+          </div>
+
           <div class="text-center">
-            <button type="button" class="send-btn" @click="send">Send</button>
+            <button type="button" class="send-btn" @click="send" :disabled="!canSend" :class="{'disabled':!canSend}">
+              Send
+            </button>
           </div>
         </div>
       </div>
@@ -61,15 +67,17 @@
 <script>
 import axios from 'axios'
 import Snackbar from "./components/Snackbar";
+import myCaptcha from 'vue-captcha'
 
 export default {
   name: 'App',
   components: {
-    Snackbar
+    Snackbar,
+    myCaptcha
   },
   data() {
     return {
-      snackbar:{
+      snackbar: {
         show: false,
         mode: 'success',
         message: ''
@@ -78,16 +86,29 @@ export default {
       name: '',
       email: '',
       message: '',
+      inputValue: null,
+      btndis: true
+    }
+  },
+  computed: {
+    canSend() {
+      return !this.btndis && this.email && this.message
     }
   },
   methods: {
+    captchaOk() {
+      console.log('captcha ok.!')
+    },
+    captchaBtn() {
+      this.btndis = false
+    },
     openWidget() {
       this.show = true
     },
     close() {
       this.show = false
     },
-    closeSnackbar(){
+    closeSnackbar() {
       this.snackbar.show = false
     },
     async send() {
@@ -130,8 +151,6 @@ export default {
 </script>
 
 <style scoped>
-
-
 @import "assets/style.css";
 </style>
 
@@ -143,8 +162,15 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
-body{
+
+body {
   margin: 0;
   padding: 0;
+}
+.vue-captcha {
+  border: none !important;
+}
+.content-ok{
+  width: 160px !important;
 }
 </style>

@@ -67,6 +67,10 @@
     margin-bottom: 24px;
 }
 
+.form-captcha{
+    align-items: center;
+}
+
 .form-group:last-child{
     margin-bottom: 0;
 }
@@ -116,4 +120,10 @@
     line-height: 1.5;
     border-radius: 0.25rem;
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.disabled{
+    border-color: #ccc;
+    background: #ccc;
+    cursor: not-allowed;
 }
