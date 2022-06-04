@@ -1,0 +1,119 @@
+.widget-button{
+    width: 30px;
+    height: 30px;
+    padding: 13px;
+    border-radius: 100%;
+    -webkit-box-shadow: 0 0 50px 0 rgb(0 0 0 / 6%);
+    box-shadow: 0 0 50px 0 rgb(0 0 0 / 6%);
+    overflow: hidden;
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: all .3s;
+    transition: all .3s;
+    cursor: pointer;
+    background: rgb(114, 191, 68);
+    position: fixed;
+    right: 80px;
+    bottom: 60px;
+}
+
+.close-icon{
+    position: absolute;
+    width: 20px;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.widget-form{
+    width: 360px;
+    border: 1px solid white;
+    border-radius: 8px;
+    box-shadow: 0 9.5px 12.7px 0 rgb(0 0 0 / 5%);
+    display: inline-block;
+    position: fixed;
+    right: 40px;
+    bottom: 60px;
+    background: white;
+    visibility: hidden;
+    transform: translateY(150px);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.opened{
+    visibility: visible;
+    transform: translateY(10px);
+    opacity: 1;
+}
+
+.widget-header{
+    background: rgb(114, 191, 68);
+    text-align: center;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    border-radius: 8px 8px 0 0;
+}
+
+.widget-body{
+    padding: 24px;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.form-group:last-child{
+    margin-bottom: 0;
+}
+
+.form-group label{
+    color: #665f5f;
+    margin-bottom: 4px;
+}
+
+.form-group input{
+    outline: none;
+    height: 32px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+.form-group textarea {
+    resize: none;
+    outline: none;
+    height: 120px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 14px 8px;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.send-btn{
+    color: #fff;
+    background-color: rgb(114, 191, 68);
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid rgb(114, 191, 68);
+    padding: 8px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
