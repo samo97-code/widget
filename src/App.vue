@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="contact">
     <div class="widget-button" @click="openWidget">
       <svg width="100%" height="100%" viewBox="0 0 30 33" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -108,37 +108,31 @@ export default {
     closeSnackbar() {
       this.snackbar.show = false
     },
+    setSnackbar(data){
+      this.snackbar = {
+        show: true,
+        mode: data.success ? 'success' : 'error',
+        message: data.message
+      }
+    },
     async send() {
-      try {
+      if (this.canSend){
         const data = {
           name: this.name,
           email: this.email,
           message: this.message,
         }
 
-        const resp = await axios.post('https://services.trackingmax.com/contact-form-receive', data)
-
-        if (resp.data.success) {
-          this.snackbar = {
-            show: true,
-            mode: 'success',
-            message: resp.data.message
-          }
-        } else {
+        try {
+          const resp = await axios.post('https://services.trackingmax.com/contact-form-receive', data)
+          await this.setSnackbar(resp.data)
+          await this.close()
+        } catch (e) {
           this.snackbar = {
             show: true,
             mode: 'error',
-            message: resp.data.message
+            message: e.message
           }
-        }
-
-        this.close()
-
-      } catch (e) {
-        this.snackbar = {
-          show: true,
-          mode: 'error',
-          message: e.message
         }
       }
     }
@@ -151,7 +145,7 @@ export default {
 </style>
 
 <style>
-#app {
+#contact {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
