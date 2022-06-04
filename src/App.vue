@@ -33,21 +33,21 @@
         <div class="form">
           <div class="form-group">
             <label for="name">Name</label>
-            <input id="name" type="text" placeholder="Name" v-model="name">
+            <input id="name" type="text" placeholder="Name" v-model="form.name">
           </div>
 
           <div class="form-group">
             <label for="email">Email*</label>
-            <input id="email" type="email" placeholder="Email*" v-model="email">
+            <input id="email" type="email" placeholder="Email*" v-model="form.email">
           </div>
 
           <div class="form-group">
             <label>Message*</label>
-            <textarea id="message" v-model="message" placeholder="Message*"></textarea>
+            <textarea id="message" v-model="form.message" placeholder="Message*"></textarea>
           </div>
 
           <div class="form-group form-captcha">
-            <myCaptcha :callSuccess="captchaBtn"></myCaptcha>
+            <myCaptcha ref="captcha" :callSuccess="captchaBtn" color="#72BF44FF" ></myCaptcha>
           </div>
 
           <div class="text-center">
@@ -82,17 +82,18 @@ export default {
         mode: 'success',
         message: ''
       },
+      form:{
+        name: '',
+        email: '',
+        message: '',
+      },
       show: false,
-      name: '',
-      email: '',
-      message: '',
-      inputValue: null,
       btndis: true
     }
   },
   computed: {
     canSend() {
-      return !this.btndis && this.email && this.message
+      return !this.btndis && this.form.email && this.form.message
     }
   },
   methods: {
@@ -115,17 +116,26 @@ export default {
         message: data.message
       }
     },
+    resetValues(){
+      this.form.name = ''
+      this.form.email = ''
+      this.form.message = ''
+      this.$refs.captcha.auth = false
+      this.$refs.captcha.text = ''
+      this.$refs.captcha.picture()
+    },
     async send() {
       if (this.canSend){
         const data = {
-          name: this.name,
-          email: this.email,
-          message: this.message,
+          name: this.form.name,
+          email: this.form.email,
+          message: this.form.message,
         }
 
         try {
           const resp = await axios.post('https://services.trackingmax.com/contact-form-receive', data)
           await this.setSnackbar(resp.data)
+          await this.resetValues()
           await this.close()
         } catch (e) {
           this.snackbar = {
