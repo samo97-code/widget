@@ -89,7 +89,12 @@ export default {
         check: false
       },
       show: false,
-      objectProps: {}
+      objectProps: {
+        'text': "Contact us",
+        'container': "#contact",
+        'endpoint': 'https://services.trackingmax.com/contact-form-receive',
+        'thankYouContent': 'Thank you! We will contact you in next 24h'
+      }
     }
   },
   computed: {
@@ -109,7 +114,9 @@ export default {
     }
   },
   mounted () {
-    this.objectProps = document.querySelector('vue-widget').objectProp
+    if (document.querySelector('vue-widget').objectProp){
+      this.objectProps = document.querySelector('vue-widget').objectProp
+    }
   },
   methods: {
     openWidget() {
