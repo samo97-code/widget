@@ -1,5 +1,6 @@
 <template>
-  <div >
+  <div :id="containerId">
+    <slot name="test"></slot>
     <div class="widget-button" @click="openWidget">
       <svg width="100%" height="100%" viewBox="0 0 30 33" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -20,8 +21,7 @@
 
     <div :class="{'opened':show}" class="widget-form">
       <div class="widget-header">
-<!--        <span class="title">{{ configs.text ? configs.text : 'Contact Default'}}</span>-->
-        <span class="title">{{ configs.text}}</span>
+        <span class="title">{{ objectProps.text ? objectProps.text : 'Contact Us'}}</span>
 
         <svg class="close-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" @click="close">
           <path
@@ -76,18 +76,6 @@ export default {
   components: {
     Snackbar
   },
-  props:{
-    title:{
-      type: Object,
-      required: false,
-      default: () => ({})
-    },
-    configs:{
-      type: Object,
-      // required: false,
-      // default: () => ({})
-    }
-  },
   data() {
     return {
       snackbar: {
@@ -102,6 +90,7 @@ export default {
         check: false
       },
       show: false,
+      objectProps: {}
     }
   },
   computed: {
@@ -109,19 +98,19 @@ export default {
       return this.form.check && this.form.email && this.form.message
     },
     containerId(){
-      // if (this.configs.container){
-      //   if (this.configs.container.charAt(0) === '#'){
-      //     return this.configs.container.substring(1)
-      //   }
-      //
-      //   return this.configs.container
-      // }
+      if (this.objectProps.container){
+        if (this.objectProps.container.charAt(0) === '#'){
+          return this.objectProps.container.substring(1)
+        }
+
+        return this.objectProps.container
+      }
 
       return 'contact'
     }
   },
   mounted () {
-    console.log(this.configs) // {x:1}
+    this.objectProps = document.querySelector('vue-widget').objectProp
   },
   methods: {
     openWidget() {
@@ -137,8 +126,7 @@ export default {
       this.snackbar = {
         show: true,
         mode: data.success ? 'success' : 'error',
-        message: data.message
-        // message: data.success && this.configs.thankYouContent ? this.configs.thankYouContent : data.message
+        message: data.success && this.objectProps?.thankYouContent ? this.objectProps.thankYouContent : data.message
       }
     },
     resetValues(){
@@ -156,7 +144,7 @@ export default {
         }
 
         try {
-          const resp = await axios.post('https://services.trackingmax.com/contact-form-receive', data)
+          const resp = await axios.post(this.objectProps.endpoint, data)
           await this.setSnackbar(resp.data)
           if (resp.data.success){
             await this.resetValues()
