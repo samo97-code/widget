@@ -20,7 +20,7 @@
 
     <div :class="{'opened':show}" class="widget-form">
       <div class="widget-header">
-        <span class="title">{{ configs.text }}</span>
+        <span class="title">{{ configs.text ? configs.text : 'Contact Default'}}</span>
 
         <svg class="close-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" @click="close">
           <path
@@ -79,14 +79,7 @@ export default {
     configs:{
       type: Object,
       required: true,
-      default: ()=>{
-        return {
-          'text': "Contact us",
-          'container': "#contact",
-          'endpoint': 'https://services.trackingmax.com/contact-form-receive',
-          'thankYouContent': 'Thank you! We will contact you in next 24h'
-        }
-      }
+      default: ()=>{}
     }
   },
   data() {
@@ -110,11 +103,15 @@ export default {
       return this.form.check && this.form.email && this.form.message
     },
     containerId(){
-      if (this.configs.container.charAt(0) === '#'){
-        return this.configs.container.substring(1)
-      }
+      // if (this.configs.container){
+      //   if (this.configs.container.charAt(0) === '#'){
+      //     return this.configs.container.substring(1)
+      //   }
+      //
+      //   return this.configs.container
+      // }
 
-      return this.configs.container
+      return 'contact'
     }
   },
   methods: {
@@ -131,7 +128,8 @@ export default {
       this.snackbar = {
         show: true,
         mode: data.success ? 'success' : 'error',
-        message: data.success && this.configs.thankYouContent ? this.configs.thankYouContent : data.message
+        message: data.message
+        // message: data.success && this.configs.thankYouContent ? this.configs.thankYouContent : data.message
       }
     },
     resetValues(){
@@ -149,7 +147,7 @@ export default {
         }
 
         try {
-          const resp = await axios.post(this.configs.endpoint, data)
+          const resp = await axios.post('https://services.trackingmax.com/contact-form-receive', data)
           await this.setSnackbar(resp.data)
           if (resp.data.success){
             await this.resetValues()
