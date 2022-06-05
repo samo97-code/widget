@@ -1,5 +1,5 @@
 <template>
-  <div id="contact">
+  <div :id="containerId">
     <div class="widget-button" @click="openWidget">
       <svg width="100%" height="100%" viewBox="0 0 30 33" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -20,7 +20,7 @@
 
     <div :class="{'opened':show}" class="widget-form">
       <div class="widget-header">
-        <span>Contact Us</span>
+        <span class="title">{{ configs.text }}</span>
 
         <svg class="close-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" @click="close">
           <path
@@ -47,7 +47,9 @@
           </div>
 
           <div class="form-group form-captcha">
-            <myCaptcha ref="captcha" :callSuccess="captchaBtn" color="#72BF44FF" ></myCaptcha>
+            <input id="checkbox" type="checkbox" v-model="form.check">
+            <label for="checkbox">I’m not a robot*</label>
+            <!--            <myCaptcha ref="captcha" :callSuccess="captchaBtn" color="#72BF44FF" resolve="digit"></myCaptcha>-->
           </div>
 
           <div class="text-center">
@@ -67,13 +69,25 @@
 <script>
 import axios from 'axios'
 import Snackbar from "./components/Snackbar";
-import myCaptcha from 'vue-captcha'
 
 export default {
   name: 'App',
   components: {
-    Snackbar,
-    myCaptcha
+    Snackbar
+  },
+  props:{
+    configs:{
+      type: Object,
+      required: true,
+      default: ()=>{
+        return {
+          'text': "Contact us",
+          'container': "#contact",
+          'endpoint': 'https://services.trackingmax.com/contact-form-receive',
+          'thankYouContent': 'Thank you! We will contact you in next 24h'
+        }
+      }
+    }
   },
   data() {
     return {
@@ -86,20 +100,24 @@ export default {
         name: '',
         email: '',
         message: '',
+        check: false
       },
       show: false,
-      btndis: true
     }
   },
   computed: {
     canSend() {
-      return !this.btndis && this.form.email && this.form.message
+      return this.form.check && this.form.email && this.form.message
+    },
+    containerId(){
+      if (this.configs.container.charAt(0) === '#'){
+        return this.configs.container.substring(1)
+      }
+
+      return this.configs.container
     }
   },
   methods: {
-    captchaBtn() {
-      this.btndis = false
-    },
     openWidget() {
       this.show = true
     },
@@ -113,16 +131,14 @@ export default {
       this.snackbar = {
         show: true,
         mode: data.success ? 'success' : 'error',
-        message: data.message
+        message: data.success && this.configs.thankYouContent ? this.configs.thankYouContent : data.message
       }
     },
     resetValues(){
       this.form.name = ''
       this.form.email = ''
       this.form.message = ''
-      this.$refs.captcha.auth = false
-      this.$refs.captcha.text = ''
-      this.$refs.captcha.picture()
+      this.form.check = false
     },
     async send() {
       if (this.canSend){
@@ -133,10 +149,13 @@ export default {
         }
 
         try {
-          const resp = await axios.post('https://services.trackingmax.com/contact-form-receive', data)
+          const resp = await axios.post(this.configs.endpoint, data)
           await this.setSnackbar(resp.data)
-          await this.resetValues()
-          await this.close()
+          if (resp.data.success){
+            await this.resetValues()
+            await this.close()
+          }
+
         } catch (e) {
           this.snackbar = {
             show: true,

@@ -56,7 +56,9 @@
     font-weight: 700;
     border-radius: 8px 8px 0 0;
 }
-
+.widget-header .title{
+    text-transform: capitalize;
+}
 .widget-body{
     padding: 24px;
 }
@@ -68,7 +70,13 @@
 }
 
 .form-captcha{
+    flex-direction: row;
     align-items: center;
+}
+
+.form-captcha input{
+    margin-right: 8px;
+    margin-top: 0;
 }
 
 .form-group:last-child{
