@@ -50,7 +50,6 @@
           <div class="form-group form-captcha">
             <input id="checkbox" type="checkbox" v-model="form.check">
             <label for="checkbox">I’m not a robot*</label>
-            <!--            <myCaptcha ref="captcha" :callSuccess="captchaBtn" color="#72BF44FF" resolve="digit"></myCaptcha>-->
           </div>
 
           <div class="text-center">
@@ -180,11 +179,5 @@ export default {
 body {
   margin: 0;
   padding: 0;
-}
-.vue-captcha {
-  border: none !important;
-}
-.content-ok{
-  width: 160px !important;
 }
 </style>
