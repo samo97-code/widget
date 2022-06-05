@@ -25,24 +25,25 @@
 </ul>
 
 
-<span id="contactOpener" onclick="clickEvent">Contact us</span>
+<span onclick="clickEvent()">Contact us</span>
 
 <vue-widget />
 
 <script>
     CONTACT_WIDGET_CONFIG = {
-        "triggerId": "#contactOpener",
-        'text': "Contact us",
-        'container': "#contact",
-        'endpoint': 'https://services.trackingmax.com/contact-form-receive',
-        'thankYouContent': 'Thank you! We will contact you in next 24h'
+        text: "Contact us",
+        container: "#contact",
+        endpoint: 'https://services.trackingmax.com/contact-form-receive',
+        thankYouContent: 'Thank you! We will contact you in next 24h'
     }
     document.getElementsByTagName('vue-widget')[0].objectProp = CONTACT_WIDGET_CONFIG
 
     function clickEvent(){
-        console.log('77777')
+        const widget = document.getElementById('widget-form')
+        if (widget) widget.classList.add('opened')
     }
 </script>
+
 <script type="application/javascript" src="./dist/js/app.js"></script>
 </body>
 </html>

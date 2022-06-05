@@ -1,21 +1,3 @@
-.widget-button{
-    width: 30px;
-    height: 30px;
-    padding: 13px;
-    border-radius: 100%;
-    -webkit-box-shadow: 0 0 50px 0 rgb(0 0 0 / 6%);
-    box-shadow: 0 0 50px 0 rgb(0 0 0 / 6%);
-    overflow: hidden;
-    -webkit-backface-visibility: hidden;
-    -webkit-transition: all .3s;
-    transition: all .3s;
-    cursor: pointer;
-    background: rgb(114, 191, 68);
-    position: fixed;
-    right: 80px;
-    bottom: 60px;
-}
-
 .close-icon{
     position: absolute;
     width: 20px;
@@ -31,8 +13,8 @@
     box-shadow: 0 9.5px 12.7px 0 rgb(0 0 0 / 5%);
     display: inline-block;
     position: fixed;
-    right: 40px;
-    bottom: 60px;
+    left: calc(50% - 180px);
+    top: calc(50% - 291px);
     background: white;
     visibility: hidden;
     transform: translateY(150px);
@@ -137,12 +119,9 @@
 }
 
 @media (max-width: 767px) {
-    .widget-button{
-        right: 20px;
-        bottom: 60px;
-    }
     .widget-form{
+        left: calc(50% - 160px);
+        top: calc(50% - 291px);
         width: 320px;
-        right: 20px;
     }
 }
