@@ -1,5 +1,5 @@
 <template>
-  <div :id="containerId">
+  <div >
     <div class="widget-button" @click="openWidget">
       <svg width="100%" height="100%" viewBox="0 0 30 33" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -20,7 +20,8 @@
 
     <div :class="{'opened':show}" class="widget-form">
       <div class="widget-header">
-        <span class="title">{{ configs.text ? configs.text : 'Contact Default'}}</span>
+<!--        <span class="title">{{ configs.text ? configs.text : 'Contact Default'}}</span>-->
+        <span class="title">{{ configs.text}}</span>
 
         <svg class="close-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" @click="close">
           <path
@@ -76,10 +77,15 @@ export default {
     Snackbar
   },
   props:{
+    title:{
+      type: Object,
+      required: false,
+      default: () => ({})
+    },
     configs:{
       type: Object,
-      required: true,
-      default: ()=>{}
+      // required: false,
+      // default: () => ({})
     }
   },
   data() {
@@ -113,6 +119,9 @@ export default {
 
       return 'contact'
     }
+  },
+  mounted () {
+    console.log(this.configs) // {x:1}
   },
   methods: {
     openWidget() {
