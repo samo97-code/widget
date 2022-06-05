@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random Website</title>
+    <link href="./dist/css/app.css" rel="stylesheet"/>
+</head>
+<body>
+<h1>This is our random website, where we can connect our widget</h1>
+<ul>
+    <li>We must add our widget to some domain, as Netlify free I add there(<a
+            href="https://incomparable-sundae-789175.netlify.app/" target="_blank">https://incomparable-sundae-789175.netlify.app/</a>),
+        so we will have cdn.
+    </li>
+    <li>In random website "head" tag we add app.css file -
+        <b>https://incomparable-sundae-789175.netlify.app/css/app.css</b>
+    </li>
+    <li>In random website "body" tag we add app.js file -
+        <b>https://incomparable-sundae-789175.netlify.app/js/app.js</b>
+    </li>
+    <li>
+        Add configs and assign to document, that we can get in widget - https://prnt.sc/-OPWOFozeMYQ
+    </li>
+    <li>Last thing we must add <b>vue-widget</b> tag to show widget</li>
+</ul>
+
+
+<vue-widget />
+
+<script>
+    CONTACT_WIDGET_CONFIG = {
+        'text': "Contact us",
+        'container': "#contact",
+        'endpoint': 'https://services.trackingmax.com/contact-form-receive',
+        'thankYouContent': 'Thank you! We will contact you in next 24h'
+    }
+    document.getElementsByTagName('vue-widget')[0].objectProp = CONTACT_WIDGET_CONFIG
+</script>
+<script type="application/javascript" src="./dist/js/app.js"></script>
+</body>
+</html>
