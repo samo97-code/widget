@@ -60,6 +60,9 @@
     margin-right: 8px;
     margin-top: 0;
 }
+.form-captcha label{
+    margin-bottom: 0 !important;
+}
 
 .form-group:last-child{
     margin-bottom: 0;
